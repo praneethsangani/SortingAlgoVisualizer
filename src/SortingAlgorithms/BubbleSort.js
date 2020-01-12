@@ -29,7 +29,7 @@ function swapValues(array, bars, index) {
     bars[index].style.height = temp_height;
     bars[index + 1].style.backgroundColor = 'red';
     bars[index].style.backgroundColor = '#0f4c75';
-    temp_height = barValues[index+1].textContent
-    barValues[index+1].textContent = barValues[index].textContent;
+    temp_height = barValues[index + 1].textContent;
+    barValues[index + 1].textContent = barValues[index].textContent;
     barValues[index].textContent = temp_height;
 }
