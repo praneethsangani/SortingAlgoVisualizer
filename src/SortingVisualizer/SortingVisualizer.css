@@ -1,0 +1,56 @@
+.main {
+    position: static;
+}
+
+/* The array of bars */
+.array-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5%;
+}
+
+.array-bar {
+    width: 100%;
+    min-width: 4px;
+    background-color: #0f4c75;
+    display: inline-flex;
+    margin: 0 1px;
+}
+
+/* The Buttons */
+.buttons {
+    position: center;
+    display: inline-block;
+
+}
+
+.button {
+    border: none;
+    outline: none;
+    background: #1b262c;
+    font-weight: 100;
+    padding: 20px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+    margin: 10px;
+}
+
+.button:hover {
+    color: #3282b8 !important;
+    font-weight: 700 !important;
+    letter-spacing: 3px;
+    background: none;
+    -webkit-box-shadow: 0 5px 40px -10px #3282b8;
+    transition: all 0.3s ease 0s;
+}
+
+.barValue {
+    color: #bbe1fa !important;
+    font-weight: 500;
+    margin: 0 auto;
+}
