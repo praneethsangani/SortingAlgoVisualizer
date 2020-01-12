@@ -1,11 +1,10 @@
 import React from 'react';
 import './SortingVisualizer.css';
 import {bubbleSort} from '../SortingAlgorithms/BubbleSort'
-import {mergeSortTopDown} from "../SortingAlgorithms/MergeSortTopDown";
 
-const NUMBER_OF_BARS = 256;
+const NUMBER_OF_BARS = 210;
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 5;
+const ANIMATION_SPEED_MS = 1;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
@@ -13,7 +12,7 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             isButtonDisabled: false,
-            color: 'darkturquoise',
+            color: '#bbe1fa',
         };
     }
 
@@ -24,41 +23,34 @@ export default class SortingVisualizer extends React.Component {
     resetArray() {
         const array = [];
         for (let i = 0; i < NUMBER_OF_BARS; i++) {
-            let rand = randomIntFromInterval(23, 600);
-            while (arrayContains(array, rand)) {
-                rand = randomIntFromInterval(23, 600);
-            }
-            array.push(rand);
+            array.push(randomIntFromInterval(23, 730));
         }
         this.setState({array});
     }
 
     generateNewArray() {
-        this.resetArray();
+        const array = [];
+        for (let i = 0; i < NUMBER_OF_BARS; i++) {
+            array.push(randomIntFromInterval(23, 730));
+        }
+        this.setState({array});
         const bars = document.getElementsByClassName('array-bar');
         for (let j = 0; j < NUMBER_OF_BARS; j++) {
-            bars[j].style.backgroundColor = 'darkturquoise';
+            bars[j].style.backgroundColor = '#0f4c75';
         }
     }
 
     async resetBarColors() {
         const bars = document.getElementsByClassName('array-bar');
         for (let j = 0; j < NUMBER_OF_BARS; j++) {
-            bars[j].style.backgroundColor = 'darkturquoise';
+            bars[j].style.backgroundColor = '#0f4c75';
         }
         await new Promise(r => setTimeout(r, ANIMATION_SPEED_MS));
     }
 
-    mergeSortTopDown() {
-        this.resetBarColors().then(() => disableButtons());
-        mergeSortTopDown(this.state.array, 0, this.state.array.length - 1, this.state.array.slice()).then(() => enableButtons());
-    }
+    mergeSort() {
 
-    mergeSortBottomUp() {
-        this.resetBarColors().then(() => disableButtons());
-        mergeSortTopDown(this.state.array, 0, this.state.array.length - 1, this.state.array.slice()).then(() => enableButtons());
     }
-
 
     quickSort() {
 
@@ -83,13 +75,9 @@ export default class SortingVisualizer extends React.Component {
                             disabled={this.state.isButtonDisabled}
                             style={{color: this.state.color}}>Generate New Array
                     </button>
-                    <button onClick={() => this.mergeSortTopDown()} className={"button"}
+                    <button onClick={() => this.mergeSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
-                            style={{color: this.state.color}}>Merge Sort (Top Down)
-                    </button>
-                    <button onClick={() => this.mergeSortBottomUp()} className={"button"}
-                            disabled={this.state.isButtonDisabled}
-                            style={{color: this.state.color}}>Merge Sort (Bottom Up)
+                            style={{color: this.state.color}}>Merge Sort
                     </button>
                     <button onClick={() => this.quickSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
@@ -107,8 +95,7 @@ export default class SortingVisualizer extends React.Component {
                 <div className={"array-container"}>
                     {array.map((value, idx) => (
                         <div className="array-bar" key={idx}
-                             style={{height: `${value}px`}}><p className={'barValue'}
-                                                               style={{visibility: 'hidden'}}>{value}</p></div>
+                             style={{height: `${value}px`}}><p className={'barValue'} style={{visibility: 'hidden'}}>{value}</p></div>
                     ))}
                 </div>
 
@@ -124,6 +111,7 @@ function randomIntFromInterval(min, max) {
 
 function disableButtons() {
     const buttons = document.getElementsByClassName("button");
+    console.log(buttons);
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true;
         buttons[i].style.color = 'red';
@@ -136,11 +124,4 @@ function enableButtons() {
         buttons[i].disabled = false;
         buttons[i].style.color = '#bbe1fa';
     }
-}
-
-function arrayContains(array, rand) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === rand) return true;
-    }
-    return false;
 }
