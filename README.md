@@ -1,1 +1,2 @@
-# SortingAlgoVisualizer
+# SortingAlgorithmVisualizer
+Inital Commit
