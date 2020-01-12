@@ -1,2 +1,1 @@
 # SortingAlgorithmVisualizer
-Inital Commit
