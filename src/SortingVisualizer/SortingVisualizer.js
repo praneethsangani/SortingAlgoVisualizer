@@ -1,9 +1,9 @@
 import React from 'react';
 import './SortingVisualizer.css';
 import {bubbleSort} from '../SortingAlgorithms/BubbleSort'
-import {mergeSort} from "../SortingAlgorithms/MergeSort";
+import {mergeSortTopDown} from "../SortingAlgorithms/MergeSortTopDown";
 
-const NUMBER_OF_BARS = 50;
+const NUMBER_OF_BARS = 256;
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 5;
 
@@ -13,7 +13,7 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             isButtonDisabled: false,
-            color: '#bbe1fa',
+            color: 'darkturquoise',
         };
     }
 
@@ -37,22 +37,28 @@ export default class SortingVisualizer extends React.Component {
         this.resetArray();
         const bars = document.getElementsByClassName('array-bar');
         for (let j = 0; j < NUMBER_OF_BARS; j++) {
-            bars[j].style.backgroundColor = '#0f4c75';
+            bars[j].style.backgroundColor = 'darkturquoise';
         }
     }
 
     async resetBarColors() {
         const bars = document.getElementsByClassName('array-bar');
         for (let j = 0; j < NUMBER_OF_BARS; j++) {
-            bars[j].style.backgroundColor = '#0f4c75';
+            bars[j].style.backgroundColor = 'darkturquoise';
         }
         await new Promise(r => setTimeout(r, ANIMATION_SPEED_MS));
     }
 
-    mergeSort() {
+    mergeSortTopDown() {
         this.resetBarColors().then(() => disableButtons());
-        mergeSort(this.state.array, this.state.array.slice()).then(() => enableButtons());
+        mergeSortTopDown(this.state.array, 0, this.state.array.length - 1, this.state.array.slice()).then(() => enableButtons());
     }
+
+    mergeSortBottomUp() {
+        this.resetBarColors().then(() => disableButtons());
+        mergeSortTopDown(this.state.array, 0, this.state.array.length - 1, this.state.array.slice()).then(() => enableButtons());
+    }
+
 
     quickSort() {
 
@@ -77,9 +83,13 @@ export default class SortingVisualizer extends React.Component {
                             disabled={this.state.isButtonDisabled}
                             style={{color: this.state.color}}>Generate New Array
                     </button>
-                    <button onClick={() => this.mergeSort()} className={"button"}
+                    <button onClick={() => this.mergeSortTopDown()} className={"button"}
                             disabled={this.state.isButtonDisabled}
-                            style={{color: this.state.color}}>Merge Sort
+                            style={{color: this.state.color}}>Merge Sort (Top Down)
+                    </button>
+                    <button onClick={() => this.mergeSortBottomUp()} className={"button"}
+                            disabled={this.state.isButtonDisabled}
+                            style={{color: this.state.color}}>Merge Sort (Bottom Up)
                     </button>
                     <button onClick={() => this.quickSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}

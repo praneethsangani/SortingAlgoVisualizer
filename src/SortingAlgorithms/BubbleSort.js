@@ -7,7 +7,7 @@ export async function bubbleSort(array, ANIMATION_SPEED_MS) {
                 await new Promise(r => setTimeout(r, ANIMATION_SPEED_MS));
             } else {
                 bars[j + 1].style.backgroundColor = 'red';
-                bars[j].style.backgroundColor = '#0f4c75';
+                bars[j].style.backgroundColor = 'darkturquoise';
                 await new Promise(r => setTimeout(r, ANIMATION_SPEED_MS));
             }
             if (j + 1 === array.length - i - 1) {
@@ -28,7 +28,7 @@ function swapValues(array, bars, index) {
     bars[index + 1].style.height = bars[index].style.height;
     bars[index].style.height = temp_height;
     bars[index + 1].style.backgroundColor = 'red';
-    bars[index].style.backgroundColor = '#0f4c75';
+    bars[index].style.backgroundColor = 'darkturquoise';
     // temp_height = barValues[index + 1].textContent;
     // barValues[index + 1].textContent = barValues[index].textContent;
     // barValues[index].textContent = temp_height;
