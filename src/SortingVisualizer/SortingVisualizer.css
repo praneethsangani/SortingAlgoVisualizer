@@ -4,18 +4,21 @@
 
 /* The array of bars */
 .array-container {
+    position: static;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     padding-left: 10%;
     padding-right: 10%;
     padding-top: 5%;
+    height: 600px;
 }
 
 .array-bar {
+    position: static;
     width: 100%;
     min-width: 4px;
-    background-color: #0f4c75;
+    background-color: darkturquoise;
     display: inline-flex;
     margin: 0 1px;
 }
@@ -41,7 +44,7 @@
 }
 
 .button:hover {
-    color: #3282b8 !important;
+    color: darkturquoise !important;
     font-weight: 700 !important;
     letter-spacing: 3px;
     background: none;
