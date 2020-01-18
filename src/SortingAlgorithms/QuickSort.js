@@ -22,21 +22,21 @@ async function partition(mainArray, low, high) {
         bars[i].style.backgroundColor = 'green';
     }
     bars[high].style.backgroundColor = 'yellow';
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 3));
 
     for (let j = low; j < high; j++) {
         bars[j].style.backgroundColor = 'red';
         bars[partitionIndex].style.backgroundColor = 'red';
-        await new Promise(r => setTimeout(r, 10));
+        await new Promise(r => setTimeout(r, 3));
         if (mainArray[j] > pivot) {
             bars[j].style.backgroundColor = 'darkturquoise';
             bars[partitionIndex].style.backgroundColor = 'darkturquoise';
         }
         if (mainArray[j] <= pivot) {
             bars[partitionIndex].style.backgroundColor = 'red';
-            await new Promise(r => setTimeout(r, 10));
+            await new Promise(r => setTimeout(r, 3));
             swap(mainArray, bars, j, partitionIndex);
-            await new Promise(r => setTimeout(r, 10));
+            await new Promise(r => setTimeout(r, 3));
             bars[j].style.backgroundColor = 'darkturquoise';
             bars[partitionIndex].style.backgroundColor = 'darkturquoise';
             partitionIndex++;
@@ -45,7 +45,7 @@ async function partition(mainArray, low, high) {
     swap(mainArray, bars, high, partitionIndex);  // Swap the pivot into the proper place
 
     bars[partitionIndex].style.backgroundColor = 'green';
-    await new Promise(r => setTimeout(r, 20));
+    await new Promise(r => setTimeout(r, 6));
     for (let i = 0; i < low; i++) {
         bars[i].style.backgroundColor = 'green';
     }

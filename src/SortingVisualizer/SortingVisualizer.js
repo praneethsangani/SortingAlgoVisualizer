@@ -4,6 +4,7 @@ import {bubbleSort} from '../SortingAlgorithms/BubbleSort'
 import {mergeSortTopDown} from "../SortingAlgorithms/MergeSortTopDown";
 import {mergeSortBottomUp} from "../SortingAlgorithms/MergeSortBottomUp";
 import {quickSort} from "../SortingAlgorithms/QuickSort";
+import {insertionSort} from "../SortingAlgorithms/InsertionSort";
 
 const NUMBER_OF_BARS = 128;
 // Change this value for the speed of the animations.
@@ -62,13 +63,16 @@ export default class SortingVisualizer extends React.Component {
         this.resetBarColors('green').then(() => enableButtons());
     }
 
-    heapSort() {
-
+    async insertionSort() {
+        this.resetBarColors('darkturquoise').then(() => disableButtons());
+        await insertionSort(this.state.array);
+        this.resetBarColors('green').then(() => enableButtons());
     }
 
-    bubbleSort() {
+    async bubbleSort() {
         this.resetBarColors('darkturquoise').then(() => disableButtons());
-        bubbleSort(this.state.array, ANIMATION_SPEED_MS).then(() => enableButtons());
+        await bubbleSort(this.state.array);
+        this.resetBarColors('green').then(() => enableButtons());
     }
 
     render() {
@@ -92,9 +96,9 @@ export default class SortingVisualizer extends React.Component {
                             disabled={this.state.isButtonDisabled}
                             style={{color: this.state.color}}>Quick Sort
                     </button>
-                    <button onClick={() => this.heapSort()} className={"button"}
+                    <button onClick={() => this.insertionSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
-                            style={{color: this.state.color}}>Heap Sort
+                            style={{color: this.state.color}}>Insertion Sort
                     </button>
                     <button onClick={() => this.bubbleSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
