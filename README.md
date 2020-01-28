@@ -2,7 +2,7 @@
 ### Visualize various sorting algorithms: Merge Sort, Quick Sort, Insertion Sort, Bubble Sort. 
 ### Use Chrome to view the website
 ## View Here: 
-### praneethsangani.github.io/SortingAlgorithmVisualizer/
+### https://praneethsangani.github.io/SortingAlgorithmVisualizer/
 
 ## TODO: 
 1. Add functionality to allow user to change the size of the array and the animation speed
