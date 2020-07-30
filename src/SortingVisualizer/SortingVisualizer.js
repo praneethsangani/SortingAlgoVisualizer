@@ -1,10 +1,14 @@
 import React from 'react';
 import './SortingVisualizer.css';
 import {bubbleSort} from '../SortingAlgorithms/BubbleSort'
+import {mergeSortTopDown} from "../SortingAlgorithms/MergeSortTopDown";
+import {mergeSortBottomUp} from "../SortingAlgorithms/MergeSortBottomUp";
+import {quickSort} from "../SortingAlgorithms/QuickSort";
+import {insertionSort} from "../SortingAlgorithms/InsertionSort";
 
-const NUMBER_OF_BARS = 210;
+const NUMBER_OF_BARS = 128;
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 1;
+const ANIMATION_SPEED_MS = 5;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
@@ -12,7 +16,7 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             isButtonDisabled: false,
-            color: '#bbe1fa',
+            color: 'darkturquoise',
         };
     }
 
@@ -23,46 +27,52 @@ export default class SortingVisualizer extends React.Component {
     resetArray() {
         const array = [];
         for (let i = 0; i < NUMBER_OF_BARS; i++) {
-            array.push(randomIntFromInterval(23, 730));
+            array.push(randomIntFromInterval(23, 600));
         }
         this.setState({array});
     }
 
     generateNewArray() {
-        const array = [];
-        for (let i = 0; i < NUMBER_OF_BARS; i++) {
-            array.push(randomIntFromInterval(23, 730));
-        }
-        this.setState({array});
-        const bars = document.getElementsByClassName('array-bar');
-        for (let j = 0; j < NUMBER_OF_BARS; j++) {
-            bars[j].style.backgroundColor = '#0f4c75';
-        }
+        window.location.reload();
     }
 
-    async resetBarColors() {
+    async resetBarColors(color) {
         const bars = document.getElementsByClassName('array-bar');
         for (let j = 0; j < NUMBER_OF_BARS; j++) {
-            bars[j].style.backgroundColor = '#0f4c75';
+            bars[j].style.backgroundColor = color;
         }
         await new Promise(r => setTimeout(r, ANIMATION_SPEED_MS));
     }
 
-    mergeSort() {
-
+    async mergeSortTopDown() {
+        this.resetBarColors('darkturquoise').then(() => disableButtons());
+        await mergeSortTopDown(this.state.array, 0, this.state.array.length - 1, this.state.array.slice());
+        this.resetBarColors('green').then(() => enableButtons());
     }
 
-    quickSort() {
-
+    async mergeSortBottomUp() {
+        this.resetBarColors('darkturquoise').then(() => disableButtons());
+        await mergeSortBottomUp(this.state.array, this.state.array.slice());
+        this.resetBarColors('green').then(() => enableButtons());
     }
 
-    heapSort() {
 
+    async quickSort() {
+        this.resetBarColors('darkturquoise').then(() => disableButtons());
+        await quickSort(this.state.array, 0, this.state.array.length - 1);
+        this.resetBarColors('green').then(() => enableButtons());
     }
 
-    bubbleSort() {
-        this.resetBarColors().then(() => disableButtons());
-        bubbleSort(this.state.array, ANIMATION_SPEED_MS).then(() => enableButtons());
+    async insertionSort() {
+        this.resetBarColors('darkturquoise').then(() => disableButtons());
+        await insertionSort(this.state.array);
+        this.resetBarColors('green').then(() => enableButtons());
+    }
+
+    async bubbleSort() {
+        this.resetBarColors('darkturquoise').then(() => disableButtons());
+        await bubbleSort(this.state.array);
+        this.resetBarColors('green').then(() => enableButtons());
     }
 
     render() {
@@ -72,20 +82,23 @@ export default class SortingVisualizer extends React.Component {
             <div className="main">
                 <div className={"buttons"}>
                     <button onClick={() => this.generateNewArray()} className={"button"}
-                            disabled={this.state.isButtonDisabled}
                             style={{color: this.state.color}}>Generate New Array
                     </button>
-                    <button onClick={() => this.mergeSort()} className={"button"}
+                    <button onClick={() => this.mergeSortTopDown()} className={"button"}
                             disabled={this.state.isButtonDisabled}
-                            style={{color: this.state.color}}>Merge Sort
+                            style={{color: this.state.color}}>Merge Sort (Top Down)
+                    </button>
+                    <button onClick={() => this.mergeSortBottomUp()} className={"button"}
+                            disabled={this.state.isButtonDisabled}
+                            style={{color: this.state.color}}>Merge Sort (Bottom Up)
                     </button>
                     <button onClick={() => this.quickSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
                             style={{color: this.state.color}}>Quick Sort
                     </button>
-                    <button onClick={() => this.heapSort()} className={"button"}
+                    <button onClick={() => this.insertionSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
-                            style={{color: this.state.color}}>Heap Sort
+                            style={{color: this.state.color}}>Insertion Sort
                     </button>
                     <button onClick={() => this.bubbleSort()} className={"button"}
                             disabled={this.state.isButtonDisabled}
@@ -112,8 +125,7 @@ function randomIntFromInterval(min, max) {
 
 function disableButtons() {
     const buttons = document.getElementsByClassName("button");
-    console.log(buttons);
-    for (let i = 0; i < buttons.length; i++) {
+    for (let i = 1; i < buttons.length; i++) {
         buttons[i].disabled = true;
         buttons[i].style.color = 'red';
     }
@@ -121,8 +133,8 @@ function disableButtons() {
 
 function enableButtons() {
     const buttons = document.getElementsByClassName("button");
-    for (let i = 0; i < buttons.length; i++) {
+    for (let i = 1; i < buttons.length; i++) {
         buttons[i].disabled = false;
-        buttons[i].style.color = '#bbe1fa';
+        buttons[i].style.color = 'darkturquoise';
     }
 }
